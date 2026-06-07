@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternak Lele Maskaav</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glow-emerald { text-shadow: 0 0 12px rgba(16, 185, 129, 0.6); }
+        .box-glow:hover { box-shadow: 0 0 15px rgba(16, 185, 129, 0.25); }
+        
+        /* Immersive UI Custom Theme Overrides */
+        body {
+            background-color: #050505 !important;
+            color: #f1f5f9 !important; /* text-slate-100 */
+        }
+        
+        #splash {
+            background-color: #050505 !important;
+        }
+
+        /* Override bg-zinc classes to match premium obsidian #121212 */
+        .bg-zinc-950, .bg-neutral-950 {
+            background-color: #050505 !important;
+        }
+
+        .bg-zinc-900, .bg-zinc-900\/50, .bg-zinc-900\/80, .bg-zinc-900\/95, .bg-zinc-900\/70, .bg-zinc-900\/40, .bg-zinc-900\/90 {
+            background-color: #121212 !important;
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Specific card container classes */
+        .border-zinc-800, .border-zinc-850, .border-zinc-900, .border-zinc-800\/80 {
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Ambient Cards (Rounded 2xl like the theme) */
+        .rounded-xl, .rounded-2xl {
+            border-radius: 1rem !important; /* rounded-2xl style */
+        }
+
+        /* Quick Action and Active buttons in theme use #1A1A1A */
+        .flex-wrap button, .grid button, .bg-gradient-to-br, button.bg-zinc-900\/80 {
+            background: #1a1a1a !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .flex-wrap button:active, .grid button:active, .nav-btn:active {
+            background: rgba(16, 185, 129, 0.1) !important;
+            transform: scale(0.97);
+        }
+
+        /* Navigation block updates */
+        header {
+            background-color: rgba(15, 15, 15, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+
+        nav {
+            background-color: rgba(15, 15, 15, 0.85) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Input element restyle */
+        input, select, textarea {
+            background-color: #0d0d0d !important;
+            border: 1px solid rgba(255, 255, 255, 0.06) !important;
+            color: #f8fafc !important; /* text-slate-50 */
+            border-radius: 0.75rem !important;
+            transition: all 0.2s ease !important;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: rgba(16, 185, 129, 0.4) !important;
+            outline: none !important;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.15) !important;
+        }
+
+        /* Tips element to match gradients */
+        .bg-gradient-to-r.from-emerald-950\/40.to-zinc-900\/60,
+        .bg-gradient-to-r {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(15, 15, 15, 0.4) 100%) !important;
+            border: 1px solid rgba(16, 185, 129, 0.15) !important;
+        }
+
+        /* Scrollbar customization */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #252525;
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-slate-100 font-sans min-h-screen overflow-x-hidden relative">
+    
+    <!-- Background Ambient Glow -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-emerald-500/10 blur-[100px] pointer-events-none z-0"></div>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash" class="fixed inset-0 bg-neutral-950 z-50 flex flex-col items-center justify-center transition-all duration-700">
+        <div class="relative w-36 h-36 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-4 border-emerald-500/30 border-t-emerald-500 animate-spin"></div>
+            <img id="splash-icon" src="file:///android_res/drawable/img_logo_maskaav.png" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=200';" class="w-24 h-24 rounded-full object-cover shadow-lg">
+        </div>
+        <h1 class="text-xl font-bold mt-6 tracking-widest text-emerald-400 glow-emerald">TERNAK LELE MASKAAV</h1>
+        <p class="text-zinc-500 text-xs mt-2 font-mono">Smart Catfish Farm Management</p>
+        <div class="w-48 bg-zinc-800 h-1 rounded-full mt-4 overflow-hidden">
+            <div class="bg-emerald-500 h-full w-full animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- MAIN APP STRUCTURE -->
+    <div class="max-w-md mx-auto min-h-screen flex flex-col relative pb-20">
+        <!-- HEADER -->
+        <header class="p-4 bg-zinc-900/80 backdrop-blur border-b border-zinc-800 sticky top-0 z-30 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img id="header-logo" src="file:///android_res/drawable/img_logo_maskaav.png" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=200';" class="w-10 h-10 rounded-full border border-emerald-500/50">
+                <div>
+                    <h1 class="text-sm font-black tracking-wider text-emerald-400 glow-emerald">TERNAK LELE MASKAAV</h1>
+                    <p class="text-[10px] text-zinc-400">Smart Catfish Farm Management System</p>
+                </div>
+            </div>
+            <div id="header-badge" class="px-2 py-1 bg-zinc-800 rounded text-[10px] font-mono text-zinc-300"></div>
+        </header>
+
+        <!-- NOTIFICATION CONTAINER -->
+        <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-zinc-950 px-4 py-2 rounded-full text-xs font-bold shadow-lg opacity-0 pointer-events-none transition-all duration-300 z-50"></div>
+
+        <!-- MAIN VIEWPORT -->
+        <main class="flex-1 p-4" id="main-content">
+            <!-- Dynamic Content Injected Here -->
+        </main>
+
+        <!-- BOTTOM NAV BAR -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-zinc-900/95 backdrop-blur-md border-t border-zinc-800 flex justify-around py-2.5 z-40">
+            <button onclick="switchTab('dashboard')" class="nav-btn flex flex-col items-center text-emerald-500" id="nav-dashboard">
+                <i class="fa-solid fa-chart-simple text-lg"></i>
+                <span class="text-[10px] mt-1 font-medium">Dashboard</span>
+            </button>
+            <button onclick="switchTab('siklus')" class="nav-btn flex flex-col items-center text-zinc-500" id="nav-siklus">
+                <i class="fa-solid fa-fish text-lg"></i>
+                <span class="text-[10px] mt-1 font-medium">Siklus</span>
+            </button>
+            <button onclick="switchTab('edukasi')" class="nav-btn flex flex-col items-center text-zinc-500" id="nav-edukasi">
+                <i class="fa-solid fa-graduation-cap text-lg"></i>
+                <span class="text-[10px] mt-1 font-medium">Edukasi AI</span>
+            </button>
+            <button onclick="switchTab('pengaturan')" class="nav-btn flex flex-col items-center text-zinc-500" id="nav-pengaturan">
+                <i class="fa-solid fa-sliders text-lg"></i>
+                <span class="text-[10px] mt-1 font-medium">Pengaturan</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
+    <script>
+        // CORE STATE & LOCALSTORAGE
+        const defaultState = {
+            activeCycle: null,
+            logs: { feed: [], water: [], sort: [], mortality: [], finance: [] },
+            pastCycles: [],
+            settings: { farmerName: "Katon MASKAAV", pondName: "Kolam Emerald Prime" }
+        };
+
+        let state = JSON.parse(localStorage.getItem('lele_data')) || defaultState;
+
+        function saveState() {
+            localStorage.setItem('lele_data', JSON.stringify(state));
+            updateHeader();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 2500);
+        }
+
+        const tips = [
+            "Sortir lele setiap 10-14 hari untuk mencegah kanibalisme karena pertumbuhan tidak merata.",
+            "Berikan pakan berkualitas dengan FCR rendah dan kurangi dosis jika cuaca hujan atau dingin.",
+            "pH air ideal untuk budidaya lele adalah 6.5 - 8. Suhu optimal berkisar 26-30°C.",
+            "Terapkan sistem kincir atau aerasi jika melihat lele sering menggantung di permukaan air.",
+            "Catat setiap mortalitas harian untuk menganalisis biosekuriti kolam budidaya.",
+            "Batasi penggantian air kolam. Lakukan pembuangan endapan bawah secara berkala saja."
+        ];
+
+        // RENDER VIEWS
+        let currView = 'dashboard';
+        let detailModule = null; 
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('opacity-0', 'pointer-events-none');
+            }, 1800);
+            updateHeader();
+            render();
+        });
+
+        function updateHeader() {
+            const badge = document.getElementById('header-badge');
+            if (state.activeCycle) {
+                const days = Math.floor((Date.now() - new Date(state.activeCycle.startDate).getTime()) / (1000 * 60 * 60 * 24)) + 1;
+                badge.innerText = `Siklus: ${state.settings.pondName} (H-${days})`;
+                badge.className = "px-2 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded text-[10px] font-mono text-emerald-400";
+            } else {
+                badge.innerText = "Siklus Nonaktif";
+                badge.className = "px-2 py-1 bg-zinc-800 rounded text-[10px] font-mono text-zinc-400";
+            }
+        }
+
+        function switchTab(tab) {
+            currView = tab;
+            detailModule = null;
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.className = 'nav-btn flex flex-col items-center text-zinc-500');
+            document.getElementById(`nav-${tab}`).className = 'nav-btn flex flex-col items-center text-emerald-400';
+            render();
+        }
+
+        function render() {
+            const container = document.getElementById('main-content');
+            if (detailModule) {
+                renderDetail(container);
+                return;
+            }
+
+            if (currView === 'dashboard') {
+                renderDashboard(container);
+            } else if (currView === 'siklus') {
+                renderSiklus(container);
+            } else if (currView === 'edukasi') {
+                renderEdukasi(container);
+            } else if (currView === 'pengaturan') {
+                renderPengaturan(container);
+            }
+        }
+
+        function getStats() {
+            if (!state.activeCycle) {
+                return { populasi: 0, survivalRate: 100, age: 0, totalFeed: 0, estWeight: 0, estRevenue: 0, estProfit: 0 };
+            }
+            const active = state.activeCycle;
+            const seedCount = Number(active.initialSeedCount);
+            const deaths = state.logs.mortality.reduce((sum, item) => sum + Number(item.count || 0), 0);
+            const populasi = Math.max(0, seedCount - deaths);
+            const survivalRate = seedCount > 0 ? Math.round((populasi / seedCount) * 100) : 100;
+            const age = Math.floor((Date.now() - new Date(active.startDate).getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+            const totalFeed = state.logs.feed.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+            const estFCR = 1.1; 
+            const estWeightKg = totalFeed > 0 ? (totalFeed / estFCR) : 0;
+            const estRevenue = estWeightKg * Number(active.targetPrice || 0);
+
+            const seedCost = seedCount * Number(active.seedPrice || 0);
+            const feedCost = totalFeed * Number(active.feedPrice || 0);
+            const otherCost = state.logs.finance.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            const estProfit = estRevenue - (seedCost + feedCost + otherCost);
+
+            return { populasi, survivalRate, age, totalFeed, estWeight: Math.round(estWeightKg), estRevenue, estProfit };
+        }
+
+        function renderDashboard(container) {
+            const stats = getStats();
+            const dateStr = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const dayOfYr = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 1)) / 86400000);
+            const activeTip = tips[dayOfYr % tips.length];
+
+            let html = `
+                <!-- DATE & AI INSIGHT -->
+                <div class="mb-4 bg-zinc-900/50 border border-zinc-800/80 p-3 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] text-zinc-500 font-mono">HARI INI</div>
+                        <div class="text-xs font-bold text-zinc-300">${dateStr}</div>
+                    </div>
+                    <div class="text-right">
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <i class="fa-solid fa-brain mr-1"></i> Smart Farm
+                        </span>
+                    </div>
+                </div>
+
+                <!-- TODAY'S TIP CARD -->
+                <div class="mb-4 bg-gradient-to-r from-emerald-950/40 to-zinc-900/60 border border-emerald-500/10 p-3.5 rounded-xl">
+                    <div class="flex items-start space-x-3">
+                        <div class="p-1 px-2 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs mt-0.5 animate-bounce font-black">💡</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-emerald-300">Tips Budidaya Hari Ini</h4>
+                            <p class="text-[11px] text-zinc-300 mt-1 leading-relaxed">${activeTip}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EMPTY STATE OR QUICK SUMMARY -->
+                ${!state.activeCycle ? `
+                <div class="mb-6 bg-zinc-900/70 border border-zinc-800 p-6 rounded-2xl text-center flex flex-col items-center">
+                    <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center text-2xl mb-4 border border-emerald-500/20 animate-pulse">
+                        <i class="fa-solid fa-industry"></i>
+                    </div>
+                    <h3 class="text-zinc-200 font-bold text-sm">Belum Ada Siklus Budidaya Aktif</h3>
+                    <p class="text-zinc-400 text-xs mt-2 max-w-xs leading-relaxed">Mulai siklus baru untuk mengaktifkan seluruh modul pemantauan, penghitungan pakan otomatis, monitoring pH, dan AI Advisor.</p>
+                    <button onclick="switchTab('siklus')" class="mt-5 px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-extrabold rounded-xl transition duration-200 shadow-lg shadow-emerald-500/10 flex items-center space-x-2">
+                        <span>➕ Kurasi Siklus Baru</span>
+                    </button>
+                </div>
+                ` : `
+                <div class="mb-6 bg-zinc-900/40 p-4 border border-zinc-800 rounded-2xl">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xs font-bold text-zinc-300">Siklus Aktif: ${state.activeCycle.pondName}</h3>
+                        <span class="text-[10px] text-emerald-400 font-mono">Biaya Bibit: Rp ${Number(state.activeCycle.initialSeedCount * state.activeCycle.seedPrice).toLocaleString()}</span>
+                    </div>
+                    <p class="text-[11px] text-zinc-400 leading-normal"><i class="fa-solid fa-robot mr-1 text-emerald-400"></i> AI Analyst: Siklus budidaya Anda berjalan stabil. Pertahankan FCR di bawah 1.2 untuk memaksimalkan laba.</p>
+                </div>
+                `}
+
+                <!-- STATS CARDS GRID -->
+                <div class="grid grid-cols-3 gap-2.5 mb-6">
+                    <div class="bg-zinc-900/60 border border-zinc-800/80 p-3 rounded-xl">
+                        <div class="text-[9px] text-zinc-500">POPULASI</div>
+                        <div class="text-xs font-black text-zinc-100 mt-1">${stats.populasi ? stats.populasi.toLocaleString() : '-'} <span class="text-[9px] text-zinc-500">ekor</span></div>
+                    </div>
+                    <div class="bg-zinc-900/60 border border-zinc-800/80 p-3 rounded-xl">
+                        <div class="text-[9px] text-zinc-500">SURVIVAL RATE</div>
+                        <div class="text-xs font-black text-emerald-400 mt-1">${state.activeCycle ? stats.survivalRate + '%' : '-'}</div>
+                    </div>
+                    <div class="bg-zinc-900/60 border border-zinc-800/80 p-3 rounded-xl">
+                        <div class="text-[9px] text-zinc-500">UMUR TEBAR</div>
+                        <div class="text-xs font-black text-zinc-100 mt-1">${state.activeCycle ? stats.age + ' hari' : '-'}</div>
+                    </div>
+                    <div class="bg-zinc-900/60 border border-zinc-800/80 p-3 rounded-xl">
+                        <div class="text-[9px] text-zinc-500">TOTAL PAKAN</div>
+                        <div class="text-xs font-black text-zinc-100 mt-1">${stats.totalFeed ? stats.totalFeed.toLocaleString() + ' kg' : '-'}</div>
+                    </div>
+                    <div class="bg-zinc-900/60 border border-zinc-800/80 p-3 rounded-xl">
+                        <div class="text-[9px] text-zinc-500">EST. PANEN</div>
+                        <div class="text-xs font-black text-zinc-100 mt-1">${stats.estWeight ? stats.estWeight.toLocaleString() + ' kg' : '-'}</div>
+                    </div>
+                    <div class="bg-zinc-900/60 border border-zinc-800/80 p-3 rounded-xl">
+                        <div class="text-[9px] text-zinc-500">EST. LABA</div>
+                        <div class="text-xs font-black text-emerald-400 mt-1">${state.activeCycle ? 'Rp ' + Math.max(0, stats.estProfit).toLocaleString() : '-'}</div>
+                    </div>
+                </div>
+
+                <!-- QUICK ACTIONS -->
+                <h4 class="text-xs font-bold text-zinc-400 mb-3 px-1 uppercase tracking-wider">⚡ Quick Action</h4>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button onclick="openFeature('feed')" class="flex-1 py-2 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left flex items-center space-x-2 text-xs font-semibold box-glow transition">
+                        <span class="text-base">🍽️</span> <span>Beri Pakan</span>
+                    </button>
+                    <button onclick="openFeature('mortality')" class="flex-1 py-2 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left flex items-center space-x-2 text-xs font-semibold box-glow transition">
+                        <span class="text-base">⚰️</span> <span>Catat Kematian</span>
+                    </button>
+                    <button onclick="openFeature('water')" class="flex-1 py-2 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left flex items-center space-x-2 text-xs font-semibold box-glow transition">
+                        <span class="text-base">💧</span> <span>Kualitas Air</span>
+                    </button>
+                </div>
+
+                <!-- MAIN MENU GRID (12 MODULES) -->
+                <h4 class="text-xs font-bold text-zinc-400 mb-3 px-1 uppercase tracking-wider">🏠 Menu Utama</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="switchTab('dashboard')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-table-cells-large"></i></div>
+                        <h5 class="text-xs font-bold">Dashboard</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Ikhtisar performa kolam saat ini.</p>
+                    </button>
+                    <button onclick="switchTab('siklus')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-fish"></i></div>
+                        <h5 class="text-xs font-bold">Data Budidaya</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Kelola parameter siklus aktif.</p>
+                    </button>
+                    <button onclick="openFeature('feed')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-bowl-food"></i></div>
+                        <h5 class="text-xs font-bold">Manajemen Pakan</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Jadwal pagi/sore & sisa FCR.</p>
+                    </button>
+                    <button onclick="openFeature('water')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-droplet"></i></div>
+                        <h5 class="text-xs font-bold">Monitoring Kolam</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Pantau indikator pH, suhu & tinggi.</p>
+                    </button>
+                    <button onclick="openFeature('sort')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-arrows-split-up-and-left"></i></div>
+                        <h5 class="text-xs font-bold">Sortir & Sampling</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Pengingat sortir 14-harian.</p>
+                    </button>
+                    <button onclick="openFeature('mortality')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-skull"></i></div>
+                        <h5 class="text-xs font-bold">Mortalitas</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Analisis penyebab kematian harian.</p>
+                    </button>
+                    <button onclick="openFeature('finance')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-wallet"></i></div>
+                        <h5 class="text-xs font-bold">Keuangan</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight font-sans">Modal bibit, pakan & laba.</p>
+                    </button>
+                    <button onclick="openFeature('harvest')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-basket-shopping"></i></div>
+                        <h5 class="text-xs font-bold">Hasil Panen</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Catat realisasi omset panen.</p>
+                    </button>
+                    <button onclick="openFeature('ai_analitik')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-network-wired"></i></div>
+                        <h5 class="text-xs font-bold">AI Analitik</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Rekomendasi pertumbuhan otomatis.</p>
+                    </button>
+                    <button onclick="openFeature('history')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-list-check"></i></div>
+                        <h5 class="text-xs font-bold">Riwayat Aktivitas</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Log lengkap & filter aksi penting.</p>
+                    </button>
+                    <button onclick="switchTab('pengaturan')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-gear"></i></div>
+                        <h5 class="text-xs font-bold">Pengaturan</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Nama petani, kolam & backup JSON.</p>
+                    </button>
+                    <button onclick="switchTab('edukasi')" class="bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-4 border border-zinc-800 rounded-2xl text-left box-glow transition duration-300">
+                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <h5 class="text-xs font-bold">Edukasi AI</h5>
+                        <p class="text-[10px] text-zinc-500 mt-1 leading-tight">Chatbot Tanya AI & manual edukasi.</p>
+                    </button>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function openFeature(fe) {
+            detailModule = fe;
+            render();
+        }
+
+        function renderSiklus(container) {
+            const active = state.activeCycle;
+            const pondNameVal = active ? active.pondName : state.settings.pondName;
+            const countVal = active ? active.initialSeedCount : "5000";
+            const seedPriceVal = active ? active.seedPrice : "200";
+            const feedPriceVal = active ? active.feedPrice : "12000";
+            const daysVal = active ? active.targetDays : "90";
+            const targetPriceVal = active ? active.targetPrice : "22000";
+            const surRateVal = active ? active.targetSurvival : "85";
+            const morningVal = active ? active.morningTime : "07:00";
+            const eveningVal = active ? active.eveningTime : "17:00";
+            const sIntVal = active ? active.sortInterval : "14";
+
+            let html = `
+                <div class="flex items-center space-x-2 mb-4">
+                    <button onclick="switchTab('dashboard')" class="text-emerald-400 font-bold text-sm"><i class="fa-solid fa-chevron-left mr-1"></i> Kembali</button>
+                </div>
+                <div class="bg-zinc-900/80 p-5 rounded-2xl border border-zinc-800 shadow-xl">
+                    <h3 class="font-bold text-sm text-emerald-400 mb-4 flex items-center justify-between">
+                        <span>📋 ${active ? 'Edit' : 'Mulai'} Siklus Budidaya</span>
+                        ${active ? `<span class="text-xs p-1 px-2 bg-emerald-500/10 text-emerald-400 rounded">Aktif</span>` : ""}
+                    </h3>
+                    
+                    <form id="siklus-form" onsubmit="saveSiklus(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] text-zinc-500 lowercase font-mono">nama kolam</label>
+                            <input name="pondName" value="${pondNameVal}" type="text" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1 text-zinc-100" required>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">jumlah bibit (ekor)</label>
+                                <input name="count" value="${countVal}" type="number" oninput="calcEstimates()" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">harga bibit per ekor (rp)</label>
+                                <input name="seedPrice" value="${seedPriceVal}" type="number" oninput="calcEstimates()" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">harga pakan per kg (rp)</label>
+                                <input name="feedPrice" value="${feedPriceVal}" type="number" oninput="calcEstimates()" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">target panen (hari)</label>
+                                <input name="targetDays" value="${daysVal}" type="number" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">target harga jual per kg (rp)</label>
+                                <input name="targetPrice" value="${targetPriceVal}" type="number" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">target survival rate (%)</label>
+                                <input name="targetSurvival" value="${surRateVal}" type="number" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">jam pakan pagi</label>
+                                <input name="morningTime" type="time" value="${morningVal}" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1 text-zinc-300">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-500 lowercase font-mono">jam pakan sore</label>
+                                <input name="eveningTime" type="time" value="${eveningVal}" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1 text-zinc-300">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-zinc-500 lowercase font-mono">interval sortir (hari)</label>
+                            <input name="sortInterval" type="number" value="${sIntVal}" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1" required>
+                        </div>
+
+                        <!-- BILLING SUMMARY -->
+                        <div class="p-3.5 bg-zinc-950 border border-zinc-850 rounded-xl space-y-1.5 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-zinc-500 font-mono text-[10px]">MODAL BIBIT</span>
+                                <span id="summary-seed" class="font-bold text-zinc-200">Rp 0</span>
+                            </div>
+                            <div class="flex justify-between border-t border-zinc-900 pt-1.5">
+                                <span class="text-zinc-500 font-mono text-[10px]">ESTIMASI MODAL PAKAN + OPERASIONAL</span>
+                                <span id="summary-est" class="font-bold text-emerald-400">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-neutral-950 rounded-xl font-extrabold text-xs transition duration-200 shadow-md">
+                            ${active ? 'SIMPAN PERUBAHAN SIKLUS' : 'MANDATKAN SIKLUS AKTIF'}
+                        </button>
+                    </form>
+                </div>
+            `;
+            container.innerHTML = html;
+            calcEstimates();
+        }
+
+        function calcEstimates() {
+            const form = document.getElementById('siklus-form');
+            if(!form) return;
+            const count = Number(form.count.value) || 0;
+            const seedPrice = Number(form.seedPrice.value) || 0;
+            const feedPrice = Number(form.feedPrice.value) || 0;
+
+            const seedCost = count * seedPrice;
+            const feedCostEstimate = count * 1.1 * feedPrice; 
+
+            document.getElementById('summary-seed').innerText = "Rp " + seedCost.toLocaleString();
+            document.getElementById('summary-est').innerText = "Rp " + (seedCost + feedCostEstimate).toLocaleString();
+        }
+
+        function saveSiklus(e) {
+            e.preventDefault();
+            const f = e.target;
+            const isEdit = state.activeCycle !== null;
+
+            state.activeCycle = {
+                pondName: f.pondName.value,
+                initialSeedCount: f.count.value,
+                seedPrice: f.seedPrice.value,
+                feedPrice: f.feedPrice.value,
+                targetDays: f.targetDays.value,
+                targetPrice: f.targetPrice.value,
+                targetSurvival: f.targetSurvival.value,
+                morningTime: f.morningTime.value,
+                eveningTime: f.eveningTime.value,
+                sortInterval: f.sortInterval.value,
+                startDate: isEdit ? state.activeCycle.startDate : new Date().toISOString()
+            };
+
+            saveState();
+            showToast(isEdit ? "Data siklus berhasil diubah!" : "Siklus budidaya baru dideklarasikan!");
+            switchTab('dashboard');
+        }
+
+        function renderDetail(container) {
+            let html = `
+                <div class="flex items-center space-x-2 mb-4">
+                    <button onclick="switchTab('dashboard')" class="text-emerald-400 font-bold text-sm"><i class="fa-solid fa-chevron-left mr-1"></i> Dashboard</button>
+                </div>
+            `;
+
+            if (!state.activeCycle && ['feed','water','sort','mortality','finance','harvest','ai_analitik'].includes(detailModule)) {
+                html += `
+                    <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl text-center">
+                        <h3 class="text-emerald-400 font-bold text-sm">Aksi Dikunci</h3>
+                        <p class="text-xs text-zinc-400 mt-2">Anda wajib mendeklarasikan data budidaya (SIKLUS) aktif terlebih dahulu di tab 'Siklus' sebelum mencatat data operasional ini.</p>
+                        <button onclick="switchTab('siklus')" class="mt-4 px-4 py-2 bg-emerald-500 text-zinc-950 text-xs font-bold rounded-lg leading-none">Ke Modul Siklus</button>
+                    </div>
+                `;
+                container.innerHTML = html;
+                return;
+            }
+
+            if (detailModule === 'feed') {
+                renderFeedModule(container, html);
+            } else if (detailModule === 'water') {
+                renderWaterModule(container, html);
+            } else if (detailModule === 'sort') {
+                renderSortModule(container, html);
+            } else if (detailModule === 'mortality') {
+                renderMortalityModule(container, html);
+            } else if (detailModule === 'finance') {
+                renderFinanceModule(container, html);
+            } else if (detailModule === 'harvest') {
+                renderHarvestModule(container, html);
+            } else if (detailModule === 'ai_analitik') {
+                renderAIAnalitikModule(container, html);
+            } else if (detailModule === 'history') {
+                renderHistoryModule(container, html);
+            }
+        }
+
+        function renderFeedModule(container, backHeader) {
+            const morning = state.activeCycle.morningTime;
+            const evening = state.activeCycle.eveningTime;
+            const feeds = state.logs.feed;
+            
+            const totalOnTime = feeds.filter(f => f.status === 'Tepat Waktu').length;
+            const totalLate = feeds.filter(f => f.status === 'Terlambat').length;
+            const totalMissed = feeds.filter(f => f.status === 'Terlewati').length;
+
+            let html = backHeader + `
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-emerald-400 flex items-center justify-between">
+                        <span>🍽️ Jadwal Pakan Harian</span>
+                        <span class="text-[10px] text-zinc-500 font-mono">FCR Target: 1.1</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+                        <div class="p-2.5 bg-zinc-950 border border-zinc-850 rounded-lg flex items-center justify-between">
+                            <span>Pagi</span> <span class="font-bold font-mono text-emerald-400">${morning}</span>
+                        </div>
+                        <div class="p-2.5 bg-zinc-950 border border-zinc-850 rounded-lg flex items-center justify-between">
+                            <span>Sore</span> <span class="font-bold font-mono text-emerald-400">${evening}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-zinc-300 mb-3">Catat Pemberian Pakan</h3>
+                    <form onsubmit="saveFeed(event)" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">tipe pakan</label>
+                                <select name="timeType" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1 text-zinc-200">
+                                    <option value="pagi">Pagi</option>
+                                    <option value="sore">Sore</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">jumlah (kg)</label>
+                                <input name="quantity" type="number" step="0.1" value="5" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block font-mono">waktu aktual</label>
+                                <input name="actualTime" type="time" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1 text-zinc-350" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">status pakan</label>
+                                <select name="status" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1 text-zinc-200">
+                                    <option value="Tepat Waktu">Tepat Waktu</option>
+                                    <option value="Terlambat">Terlambat</option>
+                                    <option value="Terlewati">Terlewati</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-zinc-500 font-mono block">catatan</label>
+                            <input name="notes" placeholder="e.g., nafsu makan lele tinggi" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1">
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-lg transition mt-2">SIMPAN LOG PAKAN</button>
+                    </form>
+                </div>
+
+                <!-- FEED METRICS -->
+                <div class="bg-zinc-900/60 p-4 border border-zinc-800 rounded-xl mb-4">
+                    <h3 class="text-xs font-bold text-zinc-300 mb-2">Persentase Ketepatan Waktu</h3>
+                    <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                        <div class="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg">
+                            <span class="font-bold text-[14px] font-mono">${totalOnTime}</span> <p class="text-[9px] text-zinc-400 mt-1">Tepat Waktu</p>
+                        </div>
+                        <div class="p-2 bg-amber-500/10 text-amber-400 rounded-lg">
+                            <span class="font-bold text-[14px] font-mono">${totalLate}</span> <p class="text-[9px] text-zinc-400 mt-1">Terlambat</p>
+                        </div>
+                        <div class="p-2 bg-rose-500/10 text-rose-400 rounded-lg">
+                            <span class="font-bold text-[14px] font-mono">${totalMissed}</span> <p class="text-[9px] text-zinc-400 mt-1">Terlewati</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed History -->
+                <div class="bg-zinc-900/80 p-4 border border-zinc-800 rounded-xl">
+                    <h3 class="text-xs font-bold text-zinc-300 mb-2">Histori Log Pakan</h3>
+                    <div class="space-y-2 max-h-40 overflow-y-auto">
+                        ${feeds.length === 0 ? '<p class="text-[10px] text-zinc-500">Belum ada catatan log pakan.</p>' : 
+                        feeds.slice().reverse().map(f => `
+                            <div class="p-2 bg-zinc-950 border border-zinc-850 rounded flex justify-between items-center text-xs font-mono">
+                                <div>
+                                    <span class="text-emerald-400 font-bold capitalize">${f.timeType}</span>
+                                    <span class="text-zinc-500 text-[10px] ml-2">${new Date(f.timestamp).toLocaleDateString('id-ID')}</span>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-zinc-300">${f.quantity} Kg <span class="text-[9px] text-zinc-500">at ${f.actualTime}</span></p>
+                                    <p class="text-[9px] ${f.status==='Tepat Waktu'?'text-emerald-400':(f.status==='Terlambat'?'text-amber-400':'text-rose-400')}">${f.status}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+            // Set current time to default actual pakan time input
+            const timeInput = container.querySelector('input[name="actualTime"]');
+            if(timeInput) {
+                const now = new Date();
+                timeInput.value = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            }
+        }
+
+        function saveFeed(e) {
+            e.preventDefault();
+            const f = e.target;
+            state.logs.feed.push({
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                timeType: f.timeType.value,
+                quantity: f.quantity.value,
+                actualTime: f.actualTime.value,
+                status: f.status.value,
+                notes: f.notes.value
+            });
+            saveState();
+            showToast("Log pakan berhasil disimpan!");
+            openFeature('feed');
+        }
+
+        function renderWaterModule(container, backHeader) {
+            const logs = state.logs.water;
+            let html = backHeader + `
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-emerald-400 mb-3 block">💧 Catat Kondisi Air Kolam</h3>
+                    <form onsubmit="saveWater(event)" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">suhu (°c)</label>
+                                <input name="temp" type="number" step="0.1" value="28.5" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">ph air (0-14)</label>
+                                <input name="ph" type="number" step="0.1" value="7.2" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">tinggi air (cm)</label>
+                                <input name="height" type="number" value="110" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">kondisi biologi air</label>
+                                <select name="condition" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1 text-zinc-300">
+                                    <option value="Hijau Cerah / Plankton Baik">Hijau Cerah / Plankton Baik</option>
+                                    <option value="Hijau Pekat">Hijau Pekat</option>
+                                    <option value="Coklat Keruh">Coklat Keruh</option>
+                                    <option value="Merah / Berbau">Merah / Berbau</option>
+                                    <option value="Bening / Kurang Plankton">Bening / Kurang Plankton</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-zinc-500 font-mono block">catatan kelainan</label>
+                            <input name="notes" placeholder="misal: air berbau amis sedikit" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1">
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-emerald-500 text-zinc-950 text-xs font-bold rounded-lg transition shadow">SIMPAN DATA MONITORING</button>
+                    </form>
+                </div>
+
+                <div class="bg-zinc-900/60 p-4 border border-zinc-800 rounded-xl">
+                    <h3 class="text-xs font-bold text-zinc-300 mb-2">Riwayat Pengukuran Air</h3>
+                    <div class="space-y-2 max-h-40 overflow-y-auto">
+                        ${logs.length === 0 ? '<p class="text-[10px] text-zinc-500">Belum ada riwayat parameter air.</p>' : 
+                        logs.slice().reverse().map(l => {
+                            const isPHSafe = l.ph >= 6.5 && l.ph <= 8.5;
+                            return `
+                                <div class="p-2.5 bg-zinc-950 border border-zinc-850 rounded flex justify-between items-center text-xs font-mono">
+                                    <div>
+                                        <p class="text-zinc-200">pH: <span class="${isPHSafe?'text-emerald-400 font-bold':'text-rose-500 font-bold'}">${l.ph}</span> | Suhu: <span class="text-emerald-400 font-bold">${l.temp}°C</span></p>
+                                        <p class="text-[10px] text-zinc-500 font-light mt-0.5">${l.condition}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-zinc-400 text-[10px]">${l.height} cm</p>
+                                        <p class="text-[9px] text-zinc-600">${new Date(l.timestamp).toLocaleDateString('id-ID')}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function saveWater(e) {
+            e.preventDefault();
+            const f = e.target;
+            state.logs.water.push({
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                temp: f.temp.value,
+                ph: f.ph.value,
+                height: f.height.value,
+                condition: f.condition.value,
+                notes: f.notes.value
+            });
+            saveState();
+            showToast("Monitoring air kolam terekam!");
+            openFeature('water');
+        }
+
+        function renderSortModule(container, backHeader) {
+            const logs = state.logs.sort;
+            const sortDays = Number(state.activeCycle.sortInterval || 14);
+
+            let daysDiff = "Belum pernah sortir";
+            let warningClass = "text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
+            if(logs.length > 0) {
+                const last = new Date(logs[logs.length-1].timestamp).getTime();
+                const diffTime = Math.abs(Date.now() - last);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                daysDiff = `${diffDays} hari yang lalu`;
+                
+                if (diffDays >= sortDays) {
+                    warningClass = "text-rose-400 bg-rose-500/10 border-rose-500/20 animate-pulse";
+                }
+            }
+
+            let html = backHeader + `
+                <div class="mb-4 bg-zinc-900 border border-zinc-800/80 p-3.5 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="text-[9px] text-zinc-500 font-mono">SORTIR TERAKHIR</div>
+                        <div class="text-xs font-extrabold text-zinc-100">${daysDiff}</div>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold border ${warningClass}">
+                            Interval: ${sortDays} hari
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-emerald-400 mb-3 block">📏 Ukuran Pengelompokan Sortir</h3>
+                    <form onsubmit="saveSort(event)" class="space-y-3">
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono">lele besar</label>
+                                <input name="big" type="number" value="1500" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono">lele sedang</label>
+                                <input name="medium" type="number" value="2000" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono">lele kecil</label>
+                                <input name="small" type="number" value="1300" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-zinc-500 font-mono">catatan / kondisi lele</label>
+                            <input name="notes" placeholder="misal: nafsu makan lele merata" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1">
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-emerald-500 text-zinc-950 text-xs font-bold rounded-lg transition">SIMPAN DATA SORTIR</button>
+                    </form>
+                </div>
+
+                <div class="bg-zinc-900/60 p-4 border border-zinc-800 rounded-xl">
+                    <h3 class="text-xs font-bold text-zinc-300 mb-2">Riwayat Penyortiran</h3>
+                    <div class="space-y-2 max-h-40 overflow-y-auto">
+                        ${logs.length === 0 ? '<p class="text-[10px] text-zinc-500">Belum ada data penyortiran lele.</p>' : 
+                        logs.slice().reverse().map(s => `
+                            <div class="p-2 bg-zinc-950 border border-zinc-850 rounded flex justify-between items-center text-xs font-mono">
+                                <div>
+                                    <p class="text-zinc-200">B: <span class="text-emerald-400 font-bold">${s.big}</span> | S: <span class="text-emerald-300">${s.medium}</span> | K: <span class="text-amber-400">${s.small}</span></p>
+                                    <p class="text-[9px] text-zinc-600 mt-1">Total: ${Number(s.big)+Number(s.medium)+Number(s.small)} ekor</p>
+                                </div>
+                                <p class="text-[9px] text-zinc-650">${new Date(s.timestamp).toLocaleDateString('id-ID')}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function saveSort(e) {
+            e.preventDefault();
+            const f = e.target;
+            state.logs.sort.push({
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                big: f.big.value,
+                medium: f.medium.value,
+                small: f.small.value,
+                notes: f.notes.value
+            });
+            saveState();
+            showToast("Log sortir berhasil dicatat!");
+            openFeature('sort');
+        }
+
+        function renderMortalityModule(container, backHeader) {
+            const logs = state.logs.mortality;
+            const seedCount = Number(state.activeCycle.initialSeedCount);
+            const totalDeaths = logs.reduce((sum, item) => sum + Number(item.count || 0), 0);
+            const rate = seedCount > 0 ? ((totalDeaths / seedCount) * 100).toFixed(1) : 0;
+
+            let html = backHeader + `
+                <div class="mb-4 bg-zinc-900 border border-zinc-800/80 p-3.5 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="text-[9px] text-zinc-500 font-mono">TOTAL AKUMULASI KEMATIAN</div>
+                        <div class="text-xs font-extrabold text-rose-400">${totalDeaths.toLocaleString()} Ekor</div>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold border border-rose-500/20 bg-rose-500/10 text-rose-450">
+                            Rasio: ${rate}%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-rose-400 mb-3 block">⚰️ Catat Sisa Kematian</h3>
+                    <form onsubmit="saveMortality(event)" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">jumlah lele mati (ekor)</label>
+                                <input name="count" type="number" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">penyebab utama</label>
+                                <select name="cause" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1 text-zinc-300">
+                                    <option value="Kanibalisme">Kanibalisme</option>
+                                    <option value="Penyakit">Penyakit</option>
+                                    <option value="Kualitas Air">Kualitas Air</option>
+                                    <option value="Stres">Stres</option>
+                                    <option value="Tidak Diketahui">Tidak Diketahui</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-zinc-500 font-mono block">catatan diagnosa harian</label>
+                            <input name="notes" placeholder="misal: sirih lele putih berlendir" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1">
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-rose-500 hover:bg-rose-450 text-zinc-950 text-xs font-bold rounded-lg transition">CATAT KEMATIAN</button>
+                    </form>
+                </div>
+
+                <!-- Live Chart mortality container -->
+                <div class="bg-zinc-900/60 p-4 border border-zinc-800 rounded-xl mb-4">
+                    <h4 class="text-xs font-bold text-zinc-300 mb-3">Grafik Sebaran Kematian</h4>
+                    <canvas id="chart-mortality" class="w-full h-32"></canvas>
+                </div>
+
+                <div class="bg-zinc-900/60 p-4 border border-zinc-800 rounded-xl">
+                    <h3 class="text-xs font-bold text-zinc-300 mb-2">Riwayat Mortalitas</h3>
+                    <div class="space-y-2 max-h-40 overflow-y-auto">
+                        ${logs.length === 0 ? '<p class="text-[10px] text-zinc-500">Kondisi bagus! Belum ada riwayat kematian.</p>' : 
+                        logs.slice().reverse().map(m => `
+                            <div class="p-2 bg-zinc-950 border border-zinc-850 rounded flex justify-between items-center text-xs font-mono">
+                                <div>
+                                    <p class="text-rose-400 font-bold">${m.count} ekor mati</p>
+                                    <p class="text-[9px] text-zinc-550 mt-0.5">Sebab: ${m.cause}</p>
+                                </div>
+                                <p class="text-[9px] text-zinc-650">${new Date(m.timestamp).toLocaleDateString('id-ID')}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+            setTimeout(() => drawMortalityChart(), 50);
+        }
+
+        function saveMortality(e) {
+            e.preventDefault();
+            const f = e.target;
+            state.logs.mortality.push({
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                count: f.count.value,
+                cause: f.cause.value,
+                notes: f.notes.value
+            });
+            saveState();
+            showToast("Log mortalitas berhasil dimasukkan!");
+            openFeature('mortality');
+        }
+
+        function drawMortalityChart() {
+            const canvas = document.getElementById('chart-mortality');
+            if(!canvas) return;
+            const logs = state.logs.mortality;
+            const causes = ["Kanibalisme", "Penyakit", "Kualitas Air", "Stres", "Tidak Diketahui"];
+            const counts = causes.map(cause => logs.filter(l => l.cause === cause).reduce((sum, item) => sum + Number(item.count || 0), 0));
+
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: causes,
+                    datasets: [{
+                        label: 'Ekor',
+                        data: counts,
+                        backgroundColor: ['#f43f5e', '#fb7185', '#fda4af', '#fecdd3', '#ffe4e6'],
+                        borderWidth: 0,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { color: '#71717a', font: { size: 9 } }, grid: { display : false } },
+                        x: { ticks: { color: '#71717a', font: { size: 9 } }, grid: { display : false } }
+                    }
+                }
+            });
+        }
+
+        function renderFinanceModule(container, backHeader) {
+            const active = state.activeCycle;
+            const seedCount = Number(active.initialSeedCount);
+            const seedPrice = Number(active.seedPrice);
+            const feedPrice = Number(active.feedPrice);
+            
+            const seedCost = seedCount * seedPrice;
+            const feedCost = state.logs.feed.reduce((sum, item) => sum + Number(item.quantity || 0), 0) * feedPrice;
+            const otherCost = state.logs.finance.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+            const totalSpent = seedCost + feedCost + otherCost;
+            const stats = getStats();
+            const profit = stats.estRevenue - totalSpent;
+
+            let html = backHeader + `
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4 text-xs font-mono space-y-2">
+                    <h3 class="font-bold text-xs text-emerald-400 mb-3 font-sans">💰 Akuntansi Anggaran Siklus</h3>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-500">MODAL BIBIT KELUAR</span>
+                        <span class="text-zinc-300">Rp ${seedCost.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-500">MODAL PAKAN (LOG AKTIF)</span>
+                        <span class="text-zinc-300">Rp ${feedCost.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-500">BENTUK OPERASIONAL LAIN</span>
+                        <span class="text-zinc-300">Rp ${otherCost.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between border-t border-zinc-800 pt-2 text-sm font-sans">
+                        <span class="font-bold text-zinc-300">TOTAL MODAL SEKARANG</span>
+                        <span class="font-bold text-zinc-100">Rp ${totalSpent.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between border-t border-zinc-850 pt-2 text-sm font-sans">
+                        <span class="font-bold text-zinc-300">ESTIMASI OMSET HARGA JUAL</span>
+                        <span class="font-bold text-emerald-400">Rp ${stats.estRevenue.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between pt-1 text-sm font-sans">
+                        <span class="font-bold text-emerald-400">ESTIMASI LABA BERSIH</span>
+                        <span class="font-bold text-emerald-400 glow-emerald">Rp ${profit.toLocaleString()}</span>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-zinc-300 mb-3">Catat Biaya Operasional Baru</h3>
+                    <form onsubmit="saveFinance(event)" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">kategori biaya</label>
+                                <select name="type" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1 text-zinc-300">
+                                    <option value="Vitamin">Vitamin</option>
+                                    <option value="Obat">Obat</option>
+                                    <option value="Listrik">Listrik</option>
+                                    <option value="Operasional Lain">Operasional Lain</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">besar biaya (rp)</label>
+                                <input name="amount" type="number" value="150000" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-zinc-500 font-mono block">deskripsi / catatan pengeluaran</label>
+                            <input name="notes" placeholder="e.g., beli probiotik booster" class="w-full bg-zinc-950 p-2 rounded border border-zinc-800 text-xs mt-1" required>
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-emerald-500 text-zinc-950 text-xs font-bold rounded-lg transition">TAMBAH PENGELUARAN</button>
+                    </form>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function saveFinance(e) {
+            e.preventDefault();
+            const f = e.target;
+            state.logs.finance.push({
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                type: f.type.value,
+                amount: f.amount.value,
+                notes: f.notes.value
+            });
+            saveState();
+            showToast("Biaya operasional baru terekam!");
+            openFeature('finance');
+        }
+
+        function renderHarvestModule(container, backHeader) {
+            const stats = getStats();
+            const active = state.activeCycle;
+            const seedCount = Number(active.initialSeedCount);
+            const seedPrice = Number(active.seedPrice);
+            const feedPrice = Number(active.feedPrice);
+
+            const seedCost = seedCount * seedPrice;
+            const feedCost = state.logs.feed.reduce((sum, item) => sum + Number(item.quantity || 0), 0) * feedPrice;
+            const otherCost = state.logs.finance.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            const totalSpent = seedCost + feedCost + otherCost;
+
+            let html = backHeader + `
+                <div class="bg-zinc-900/80 p-4 rounded-xl border border-zinc-800 mb-4">
+                    <h3 class="font-bold text-xs text-rose-400 mb-2">🚨 TUTUP SIKLUS DAN REAP HASIL</h3>
+                    <p class="text-[10px] text-zinc-400 leading-normal mb-4">Pastikan Anda telah memasukkan seluruh pakan penting dan operasional. Sembari melapor hasil actual di bawah ini, siklus aktif akan dibekukan dan diarsipkan ke riwayat panen.</p>
+                    
+                    <form onsubmit="saveHarvest(event)" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">berat total panen (kg)</label>
+                                <input name="weight" type="number" step="0.1" value="${stats.estWeight}" oninput="calcHarvestProfit(this.value, ${totalSpent})" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                            <div>
+                                <label class="text-[9px] text-zinc-500 font-mono block">harga jual per kg (rp)</label>
+                                <input name="price" type="number" value="${active.targetPrice}" oninput="calcHarvestProfit(document.getElementById('harvest-weight').value, ${totalSpent})" id="harvest-price" class="w-full bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs mt-1" required>
+                            </div>
+                        </div>
+                        <input id="harvest-weight" type="hidden" value="${stats.estWeight}">
+
+                        <div class="p-3 bg-zinc-950 rounded-xl space-y-1 font-mono text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-zinc-500">LOG TOTAL MODAL</span>
+                                <span>Rp ${totalSpent.toLocaleString()}</span>
+                            </div>
+                            <div class="flex justify-between text-emerald-400 font-bold border-t border-zinc-900 mt-2 pt-1">
+                                <span>OMSET PANEN HARGA RENCANA</span>
+                                <span id="harv-revenue">Rp ${(stats.estWeight * active.targetPrice).toLocaleString()}</span>
+                            </div>
+                            <div class="flex justify-between text-emerald-400 font-bold">
+                                <span>REKAP LABA BERSIH HARB</span>
+                                <span id="harv-profit">Rp ${((stats.estWeight * active.targetPrice) - totalSpent).toLocaleString()}</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-red-600 hover:bg-red-500 text-zinc-100 font-black text-xs rounded-xl shadow-lg transition">TUTUP SIKLUS & ARSIPKAN</button>
+                    </form>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function calcHarvestProfit(kg, totalSpent) {
+            document.getElementById('harvest-weight').value = kg;
+            const price = Number(document.getElementById('harvest-price').value) || 0;
+            const omset = Number(kg) * price;
+            const profit = omset - totalSpent;
+            document.getElementById('harv-revenue').innerText = "Rp " + omset.toLocaleString();
+            document.getElementById('harv-profit').innerText = "Rp " + profit.toLocaleString();
+        }
+
+        function saveHarvest(e) {
+            e.preventDefault();
+            const f = e.target;
+            const active = state.activeCycle;
+            const weight = Number(f.weight.value);
+            const price = Number(f.price.value);
+            const omset = weight * price;
+
+            const deaths = state.logs.mortality.reduce((sum, item) => sum + Number(item.count || 0), 0);
+            const initialSeed = Number(active.initialSeedCount);
+            const harvestedPop = initialSeed - deaths;
+            const survivalRate = initialSeed > 0 ? Math.round((harvestedPop / initialSeed) * 100) : 0;
+
+            const seedPrice = Number(active.seedPrice);
+            const feedPrice = Number(active.feedPrice);
+            const seedCost = initialSeed * seedPrice;
+            const feedCost = state.logs.feed.reduce((sum, item) => sum + Number(item.quantity || 0), 0) * feedPrice;
+            const otherCost = state.logs.finance.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            const totalCapital = seedCost + feedCost + otherCost;
+            const profit = omset - totalCapital;
+
+            // Save to historical cycle database
+            state.pastCycles.push({
+                id: Date.now(),
+                name: active.pondName,
+                startDate: active.startDate,
+                endDate: new Date().toISOString(),
+                initialCount: initialSeed,
+                survival: survivalRate,
+                weight: weight,
+                omset: omset,
+                capital: totalCapital,
+                profit: profit
+            });
+
+            // Wipe today logs
+            state.activeCycle = null;
+            state.logs = { feed: [], water: [], sort: [], mortality: [], finance: [] };
+
+            saveState();
+            showToast("Siklus berhasil ditutup dan masuk Arsip!");
+            switchTab('dashboard');
+        }
+
+        function renderAIAnalitikModule(container, backHeader) {
+            const stats = getStats();
+            let growthText = "Massa tumbuh stabil. Pastikan pemberian pakan sesuai bobot harian.";
+            let advice = "Lanjutkan sortir berkala untuk memisahkan ukuran ikan yang bervariasi.";
+            
+            if(stats.survivalRate < 80) {
+                growthText = "Suhu / pH terindikasi kurang sesuai akibat curah air berlebih.";
+                advice = "Gunakan probiotik dalam pakan untuk membantu imunitas pencernaan lele.";
+            }
+
+            let html = backHeader + `
+                <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl mb-4">
+                    <h3 class="font-extrabold text-sm text-emerald-400 mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-brain"></i> <span>AI Advisor - Maskaav Smart Farm</span>
+                    </h3>
+                    <div class="p-3.5 bg-zinc-950 rounded-xl space-y-3 text-xs leading-relaxed">
+                        <div>
+                            <span class="text-[10px] text-zinc-550 font-mono font-bold block">INDENTIFY PERKEMBANGAN LELE</span>
+                            <p class="text-zinc-350 font-medium">${growthText}</p>
+                        </div>
+                        <div class="border-t border-zinc-900 pt-3">
+                            <span class="text-[10px] text-zinc-550 font-mono font-bold block">REKOMENDASI MANDATORY</span>
+                            <p class="text-emerald-400 font-semibold">${advice}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderHistoryModule(container, backHeader) {
+            let html = backHeader + `
+                <div class="bg-zinc-900/80 p-4 border border-zinc-800 rounded-xl mb-4">
+                    <h3 class="text-xs font-bold text-zinc-300 mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i>
+                        <span>Arsip Riwayat Siklus Sebelumnya</span>
+                    </h3>
+                    
+                    <div class="space-y-4 max-h-96 overflow-y-auto">
+                        ${state.pastCycles.length === 0 ? '<p class="text-xs text-zinc-500 text-center py-4">Belum ada siklus budidaya yang diarsipkan.</p>' : 
+                        state.pastCycles.slice().reverse().map((c, idx) => `
+                            <div class="p-4 bg-zinc-950 border border-zinc-850 rounded-xl space-y-2 text-xs">
+                                <div class="flex justify-between items-center border-b border-zinc-900 pb-2">
+                                    <span class="font-bold text-emerald-400">${c.name}</span>
+                                    <span class="text-[9px] text-zinc-550">${new Date(c.endDate).toLocaleDateString('id-ID')}</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-zinc-400 font-mono text-[10px]">
+                                    <p>Tebar: ${c.initialCount.toLocaleString()} ekor</p>
+                                    <p>Survival: ${c.survival}%</p>
+                                    <p>Berat Panen: ${c.weight} kg</p>
+                                    <p>Modal: Rp ${c.capital.toLocaleString()}</p>
+                                </div>
+                                <div class="flex justify-between text-xs pt-1 border-t border-zinc-900 leading-none">
+                                    <span class="text-zinc-500 font-sans">LABA BERSIH SIKLUS</span>
+                                    <span class="text-emerald-400 font-extrabold font-mono">Rp ${c.profit.toLocaleString()}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        // TAB 3: EDUKASI AI & CHATBOT
+        const articles = [
+            { category: "Dasar Budidaya Lele", title: "Pemilihan Bibit Berkualitas Unggul", content: "Pilihlah bibit lele yang aktif bergerak, ukuran seragam, organ tubuh lengkap, dan bebas penyakit, sebaiknya tipe Sangkuriang atau Mutiara." },
+            { category: "Dasar Budidaya Lele", title: "Kepadatan Tebar Kolam yang Ideal", content: "Kepadatan tebar optimal untuk budidaya lele konvensional adalah berkisar 150-250 ekor per meter persegi, tinggi air minimal 1 meter." },
+            { category: "Manajemen Pakan", title: "FCR (Feed Conversion Ratio) Ringkas", content: "Lakukan kalkulasi FCR dengan total berat pakan dibagi total bobot panen lele. FCR ideal lele berkisar 1.0 hingga 1.2." },
+            { category: "Kualitas Air", title: "Aspek pH Ideal Air Kolam", content: "pH ideal lele adalah 6.5 - 8. Jika air terlalu asam, beri kapur dolomit secukupnya; jika terlalu basa, larutkan daun ketapang kering." },
+            { category: "Penyakit dan Mortalitas", title: "Mencegah Kanibalisme Lele", content: "Lakukan sortir teratur setiap 10-14 hari sekali ke dalam 3 ember sortir ukuran agar lele kecil tidak dimakan lele besar yang tumbuh dominan." }
+        ];
+
+        let educationSearchResults = articles;
+        let aiChatLog = [{ bot: true, msg: "Halo! Saya adalah mentor digital Budidaya Lele Maskaav Anda. Silakan ketik pertanyaan seputar lele di sini!" }];
+
+        function renderEdukasi(container) {
+            let html = `
+                <!-- TANYA AI Advisor -->
+                <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl mb-4">
+                    <h3 class="font-extrabold text-sm text-emerald-400 mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-robot"></i> <span>Tanya AI Farm Mentor</span>
+                    </h3>
+                    
+                    <div id="chat-box" class="space-y-2 max-h-52 overflow-y-auto p-3.5 bg-zinc-950 rounded-xl mb-3 text-xs flex flex-col">
+                        ${aiChatLog.map(c => `
+                            <div class="${c.bot ? 'self-start bg-zinc-900 text-zinc-200' : 'self-end bg-emerald-500 text-zinc-950 font-semibold'} px-3 py-2 rounded-xl max-w-[85%] leading-relaxed">
+                                ${c.msg}
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <form onsubmit="askAIChatbot(event)" class="flex space-x-2">
+                        <input name="query" placeholder="Tanya pH lele aman, pakan, dll..." class="flex-1 bg-zinc-950 px-3.5 py-2 text-xs rounded-xl border border-zinc-850" required>
+                        <button type="submit" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 rounded-xl text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+
+                <!-- CARI KELAS KATEGORI -->
+                <div class="bg-zinc-900/60 p-4 border border-zinc-850 rounded-2xl mb-4">
+                    <h3 class="text-xs font-black text-zinc-300 mb-3">Pusat Pengetahuan Kelas</h3>
+                    <input type="text" placeholder="Cari materi..." oninput="searchLessons(this.value)" class="w-full bg-zinc-950 px-3 py-2 text-xs rounded-lg border border-zinc-850 mb-3">
+                    
+                    <div id="lessons-list" class="space-y-3.5 max-h-60 overflow-y-auto">
+                        <!-- Classes populated dynamically -->
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+            setTimeout(() => {
+                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+                updateLessonsList();
+            }, 30);
+        }
+
+        function searchLessons(q) {
+            if(!q) {
+                educationSearchResults = articles;
+            } else {
+                educationSearchResults = articles.filter(a => a.title.toLowerCase().includes(q.toLowerCase()) || a.category.toLowerCase().includes(q.toLowerCase()) || a.content.toLowerCase().includes(q.toLowerCase()));
+            }
+            updateLessonsList();
+        }
+
+        function updateLessonsList() {
+            const list = document.getElementById('lessons-list');
+            if(!list) return;
+
+            if(educationSearchResults.length === 0) {
+                list.innerHTML = '<p class="text-[10px] text-zinc-650 text-center py-2">Materi tidak ditemukan.</p>';
+                return;
+            }
+
+            list.innerHTML = educationSearchResults.map(a => `
+                <div class="p-3 bg-zinc-950 border border-zinc-900 rounded-xl space-y-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[9px] text-zinc-550 font-bold uppercase font-mono bg-zinc-900 px-1.5 py-0.5 rounded">${a.category}</span>
+                    </div>
+                    <h4 class="text-xs font-bold text-zinc-100">${a.title}</h4>
+                    <p class="text-[11px] text-zinc-400 leading-relaxed font-light">${a.content}</p>
+                </div>
+            `).join('');
+        }
+
+        function askAIChatbot(e) {
+            e.preventDefault();
+            const f = e.target;
+            const query = f.query.value;
+
+            aiChatLog.push({ bot: false, msg: query });
+            f.query.value = "";
+            render();
+
+            setTimeout(() => {
+                let botAnswer = "Pertanyaan bagus! Untuk menjaga pertumbuhan lele yang seimbang, pastikan menjaga pergantian air dasar kolam 20-30% setiap 2-3 minggu sekali dan tambahkan probiotik.";
+                if (query.toLowerCase().includes("ph")) {
+                    botAnswer = "pH paling optimal untuk ikan lele adalah 6.5 sampai 8. Jika pH drop di bawah 6, lele akan rentan terserang jamur moncong putih. Solusinya, tebarkan kapur pertanian (dolomit) 10g/m³.";
+                } else if(query.toLowerCase().includes("pakan") || query.toLowerCase().includes("makan")) {
+                    botAnswer = "Untuk bibit lele berumur di bawah 30 hari, berikan pakan tepung atau crumble 3-4 kali sehari. Untuk lele konsumsi berumur >30 hari, berikan pakan pellet 2 kali sehari (Pagi dan Sore).";
+                } else if(query.toLowerCase().includes("gantung") || query.toLowerCase().includes("surface")) {
+                    botAnswer = "Lele sering menggantung di permukaan diakibatkan amonia yang tinggi dan berkurangnya kadar oksigen larut. Segera buang kotoran dasar air kolam (sifon) dan nyalakan aerator.";
+                }
+
+                aiChatLog.push({ bot: true, msg: botAnswer });
+                render();
+            }, 500);
+        }
+
+        // TAB 4: SETTINGS & BACKUPS & RESETS
+        function renderPengaturan(container) {
+            let html = `
+                <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl mb-4 space-y-4">
+                    <h4 class="text-xs font-extrabold text-emerald-400">⚙️ Sunting Identitas Peternakan</h4>
+                    <div>
+                        <label class="block text-[9px] text-zinc-500 font-mono">nama peternak</label>
+                        <input id="pref-farmer" value="${state.settings.farmerName}" type="text" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1 text-zinc-100">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-zinc-500 font-mono font-mono">nama kolam default</label>
+                        <input id="pref-pond" value="${state.settings.pondName}" type="text" class="w-full bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-xs mt-1 text-zinc-100">
+                    </div>
+                    <button onclick="saveSettings()" class="w-full py-2 bg-emerald-500 text-zinc-950 text-xs font-bold rounded-lg transition">SIMPAN PENGATURAN</button>
+                </div>
+
+                <div class="bg-zinc-900/60 p-5 border border-zinc-800 rounded-2xl mb-4 space-y-4">
+                    <h4 class="text-xs font-bold text-zinc-300">💾 Ekspor & Impor Cadangan Data</h4>
+                    <p class="text-[10px] text-zinc-500 leading-normal">Salin string JSON di bawah untuk membackup data Anda. Impor cadangan dengan menempelkannya.</p>
+                    <textarea id="json-backup" class="w-full bg-zinc-950 p-2 border border-zinc-850 rounded text-[9px] font-mono h-20 text-zinc-400">${JSON.stringify(state)}</textarea>
+                    <button onclick="importJSON()" class="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-bold rounded-lg transition border border-zinc-700">IMPORT DARI JSON CADANGAN</button>
+                </div>
+
+                <div class="bg-zinc-900/40 border border-zinc-800 p-4 rounded-xl space-y-3">
+                    <h4 class="text-xs font-black text-rose-500">☣️ Hapus / Reset Budidaya</h4>
+                    <button onclick="resetData(1)" class="w-full py-2 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 text-xs font-semibold rounded-lg text-left px-3 border border-amber-500/20">
+                        🗑️ Reset Aktivitas Harian (Log Air, Pakan, Sortir)
+                    </button>
+                    <button onclick="resetData(2)" class="w-full py-2 bg-rose-500/15 text-rose-450 hover:bg-rose-500/20 text-xs font-semibold rounded-lg text-left px-3 border border-rose-500/25">
+                        📦 Mulai Siklus Baru (Simpan Arsip Panen lama)
+                    </button>
+                    <button onclick="resetData(3)" class="w-full py-2 bg-red-600 text-zinc-100 text-xs font-bold rounded-lg text-left px-3 shadow">
+                        💀 RESET TOTAL APLIKASI (Wipe Seluruh Data)
+                    </button>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function saveSettings() {
+            state.settings.farmerName = document.getElementById('pref-farmer').value;
+            state.settings.pondName = document.getElementById('pref-pond').value;
+            saveState();
+            showToast("Identitas peternak berhasil disimpan!");
+            switchTab('dashboard');
+        }
+
+        function importJSON() {
+            try {
+                const text = document.getElementById('json-backup').value;
+                const parsed = JSON.parse(text);
+                if (parsed.logs && parsed.settings) {
+                    state = parsed;
+                    saveState();
+                    showToast("Impor data JSON berhasil dipulihkan!");
+                    switchTab('dashboard');
+                } else {
+                    alert("Skema JSON tidak valid.");
+                }
+            } catch (e) {
+                alert("Format JSON salah " + e);
+            }
+        }
+
+        function resetData(opt) {
+            if (opt === 1) {
+                if(confirm("Apakah Anda yakin menghapus log aktivitas harian? Sisa data siklus akan tetap ada.")) {
+                    state.logs = { feed: [], water: [], sort: [], mortality: [], finance: [] };
+                    saveState();
+                    showToast("Log aktivitas harian berhasil dibersihkan!");
+                    switchTab('dashboard');
+                }
+            } else if (opt === 2) {
+                if(confirm("Apakah Anda yakin mengakhiri siklus ini dan mulai siklus baru? Data panen saat ini akan dikosongkan.")) {
+                    state.activeCycle = null;
+                    state.logs = { feed: [], water: [], sort: [], mortality: [], finance: [] };
+                    saveState();
+                    showToast("Siklus dihentikan. Anda siap memulai siklus baru!");
+                    switchTab('dashboard');
+                }
+            } else if (opt === 3) {
+                const conf1 = confirm("PERINGATAN GANDA!\nHapus seluruh data aplikasi permanen? Ini termasuk riwayat arsip panen!");
+                if(conf1) {
+                    const conf2 = confirm("KONFIRMASI TERAKHIR: Seluruh data LocalStorage lele akan hilang. Hapus?");
+                    if(conf2) {
+                        state = JSON.parse(stringifyAndDeepClone(defaultState));
+                        localStorage.removeItem('lele_data');
+                        saveState();
+                        showToast("Sistem direset total ke setelan pabrik!");
+                        window.location.reload();
+                    }
+                }
+            }
+        }
+
+        function stringifyAndDeepClone(obj) {
+            return JSON.stringify(obj);
+        }
+    </script>
+</body>
+</html>

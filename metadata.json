@@ -1,0 +1,6 @@
+{
+  "name": "TERNAK LELE MASKAAV",
+  "description": "Smart Catfish Farm Management System - Solusi digital manajemen budidaya lele modern, mandiri, dan akurat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
