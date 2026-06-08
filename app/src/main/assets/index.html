@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ternak Lele Maskaav</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="tailwind.js"></script>
+    <script src="chart.min.js"></script>
+    <link rel="stylesheet" href="css/all.min.css">
     <style>
         .glow-emerald { text-shadow: 0 0 12px rgba(16, 185, 129, 0.6); }
         .box-glow:hover { box-shadow: 0 0 15px rgba(16, 185, 129, 0.25); }
@@ -115,7 +115,7 @@
     <div id="splash" class="fixed inset-0 bg-neutral-950 z-50 flex flex-col items-center justify-center transition-all duration-700">
         <div class="relative w-36 h-36 flex items-center justify-center">
             <div class="absolute inset-0 rounded-full border-4 border-emerald-500/30 border-t-emerald-500 animate-spin"></div>
-            <img id="splash-icon" src="file:///android_res/drawable/img_logo_maskaav.png" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=200';" class="w-24 h-24 rounded-full object-cover shadow-lg">
+            <img id="splash-icon" src="img_logo_maskaav.png" onerror="this.src='img_logo_maskaav.png';" class="w-24 h-24 rounded-full object-cover shadow-lg">
         </div>
         <h1 class="text-xl font-bold mt-6 tracking-widest text-emerald-400 glow-emerald">TERNAK LELE MASKAAV</h1>
         <p class="text-zinc-500 text-xs mt-2 font-mono">Smart Catfish Farm Management</p>
@@ -129,7 +129,7 @@
         <!-- HEADER -->
         <header class="p-4 bg-zinc-900/80 backdrop-blur border-b border-zinc-800 sticky top-0 z-30 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <img id="header-logo" src="file:///android_res/drawable/img_logo_maskaav.png" onerror="this.src='https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=200';" class="w-10 h-10 rounded-full border border-emerald-500/50">
+                <img id="header-logo" src="img_logo_maskaav.png" onerror="this.src='img_logo_maskaav.png';" class="w-10 h-10 rounded-full border border-emerald-500/50">
                 <div>
                     <h1 class="text-sm font-black tracking-wider text-emerald-400 glow-emerald">TERNAK LELE MASKAAV</h1>
                     <p class="text-[10px] text-zinc-400">Smart Catfish Farm Management System</p>
